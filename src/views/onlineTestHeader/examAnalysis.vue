@@ -505,6 +505,8 @@
 	.examAnalysis {}
 
 	.main {
+		display: flex;
+		flex-direction: column;
 		padding: 20px 50px;
 		background-color: #f3f3f3;
 	}

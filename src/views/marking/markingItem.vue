@@ -151,17 +151,7 @@
 				that.$http.post('/exam/SaveExam', params)
 				.then(res => {
 					console.log(res.data);
-					if(res.data.code == 200) {
-						that.markingPostion = that.markingPostion + 1;
-						that.$router.push({
-							name: 'markingItem',
-							params: {
-								examId: that.examId,
-								markingPostion: that.markingPostion
-							}
-						})
-						that.getDetail()
-					}
+					
 				})
 				.catch(res => {
 					console.log(res)
