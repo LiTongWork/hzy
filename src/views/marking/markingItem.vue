@@ -156,19 +156,9 @@
 				.catch(res => {
 					console.log(res)
 				})		
-			},
-			// 跳转
-			toMarkingItem(id,postion) {
-				const { href } = this.$router.resolve({
-					name: 'markingItem',
-					params: {
-						examId: id,
-						markingPostion: postion
-					}
-				});
-				window.open(href, '_blank');
-			},
-		},
+			}
+
+		}
 	}
 </script>
 
