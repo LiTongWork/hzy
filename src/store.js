@@ -6,11 +6,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
 	// 个人中心左侧导航栏选中位置
-	index: '1-1'
+	index: '1-2'
   },
   mutations: {
-	changeIndex (state) {
-		store.index = localStorage.getItem('index')
+	updateIndex (state) {
+		state.index = localStorage.getItem('index') 
 	}
   },
   actions: {

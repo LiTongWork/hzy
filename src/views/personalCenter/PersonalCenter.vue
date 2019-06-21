@@ -8,7 +8,7 @@
 				<p>{{userName}}</p>
 				<div class="border"></div>
 			</div>
-			<el-menu class="el-menu-vertical-demo" :default-openeds='openeds' :default-active="index" @select="changeIndex"
+			<el-menu class="el-menu-vertical-demo" :default-openeds='openeds' :default-active="indexContent" @select="changeIndex"
 			 @open="handleOpen" @close="handleClose">
 				<el-submenu index="1">
 					<template slot="title">
@@ -62,12 +62,11 @@
 </template>
 
 <script>
-	import {mapState} from 'vuex'
 	export default {
 		name: 'personalCenter',
 		data() {
 			return {
-				index: localStorage.getItem('index'),
+				// index: localStorage.getItem('index'),
 				openeds: ['1', '2', '3'],
 				userName: localStorage.getItem('userName')
 			};
@@ -85,6 +84,7 @@
 			changeIndex(val) {
 				this.index = val;
 				localStorage.setItem('index', val)
+				this.$store.commit('updateIndex',localStorage.getItem('index'))
 				console.log(this.indexContent)
 			}
 		},
