@@ -34,7 +34,7 @@
 				}
 				this.$http.post('/Login/UserLogin', param)
 					.then(res => {
-						// console.log(res.data.data)
+						console.log(res)
 						localStorage.setItem("dataToken", res.data.data.token)
 						localStorage.setItem("userName", res.data.data.userName)
 						localStorage.setItem("loginType", res.data.data.loginType)
@@ -68,7 +68,7 @@
 
 					})
 					.catch(res => {
-						console.log(res.data, "登录失败")
+						console.log(res, "登录失败")
 					})
 
 			},
@@ -108,8 +108,8 @@
 	.form {
 		z-index: 10;
 		position: relative;
-		width: 840px;
-		height: 620px;
+		width: 550px;
+		height: 450px;
 		background-color: #fff;
 		border-radius: 20px;
 		box-shadow: 0px 3px 28px -10px #000;
@@ -125,7 +125,7 @@
 	h1 {
 		text-align: center;
 		width: 100%;
-		font-size: 64px;
+		font-size: 54px;
 		font-weight: 500;
 		color: #1abb99;
 	}
@@ -143,13 +143,13 @@
 
 		.icon {
 			position: absolute;
-			top: 297px;
-			left: 210px;
+			top: 167px;
+			left: 67px;
 			z-index: 5;
 		}
 
 		.icon1 {
-			top: 384px;
+			top: 255px;
 		}
 	}
 

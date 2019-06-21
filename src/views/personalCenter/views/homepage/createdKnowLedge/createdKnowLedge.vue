@@ -61,7 +61,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
 let id = 1000;
 export default {
   name: "createdKnowLedge",
@@ -246,6 +246,7 @@ export default {
         this.$http
         .post("/Course/Single", param)
         .then(res => {
+						console.log(res)
             // console.log(JSON.parse( res.data.data.knowJson) )
             this.data = JSON.parse( res.data.data.knowJson)
             // console.log(111111,this.data)

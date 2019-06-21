@@ -43,6 +43,15 @@
 		},
 		mounted() {
 			let that = this;
+			if (!localStorage.getItem('dataToken')) {
+				setTimeout(() => {
+					// that.loading = false;
+					this.$router.push({
+						name: 'login'
+					});
+				},1000)
+				return
+			}
 			if(that.$route.params.examId){
 				that.examId = that.$route.params.examId;
 			}

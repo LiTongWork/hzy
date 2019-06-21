@@ -1,6 +1,6 @@
 <template>
   <div class="questionManage">
-    <div class="header-wrapper">
+<!--    <div class="header-wrapper">
       <div class="title">
         <el-tabs class="fl" @tab-click="selectType">
           <el-tab-pane v-for="(item, index) in headline" :label="item" :key="index"></el-tab-pane>
@@ -20,20 +20,20 @@
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </div>
-    </div>
+    </div> -->
     <div class="content-wrapper">
       <div class="title" v-show="type === 0">
-        <el-checkbox v-model="checkAll">本页全选</el-checkbox>
+        <!-- <el-checkbox v-model="checkAll">本页全选</el-checkbox> -->
         <span class="total">共{{total}}条记录</span>
-        <div class="fr">
+   <!--     <div class="fr">
           <el-button class="dark-bg">批量删除</el-button>
-        </div>
+        </div> -->
       </div>
-      <ul class="list">
+      <ul class="list" v-if="chooseArr.length > 0">
         <li class="list-item" v-for="(item, index) in chooseArr" :key="index">
           <p class="question">
-            <el-checkbox v-model="item.checked"></el-checkbox>
-            <span>1.{{item.title}}（）</span>
+            <!-- <el-checkbox v-model="item.checked"></el-checkbox> -->
+            <span v-html="item.layout"></span>
           </p>
           <p class="answer">
             <span v-for="(m, n) in item.answer" :key="n">
@@ -41,44 +41,37 @@
             </span>
           </p>
           <p class="optionInfo">
-            <span>{{ item.info.difficulty }}</span>
+<!--            <span>{{ item.difficulty }}</span>
             <i></i>
-            <span>已选{{ item.info.hour }}课时</span>
+            <span>已选{{ item.hour }}课时</span> -->
             <i></i>
-            <span>{{ item.info.type }}</span>
+            <span>{{ item.courseName }}</span>
+<!--            <i></i>
+            <span>{{ item.number }}</span>
             <i></i>
-            <span>{{ item.info.number }}</span>
+            <span>贡献者：{{ item.contributor }}</span>
             <i></i>
-            <span>贡献者：{{ item.info.contributor }}</span>
-            <i></i>
-            <span>组卷次数：{{ item.info.times }}</span>
-            <span class="fr">更新时间：{{item.info.updateTime}}</span>
+            <span>组卷次数：{{ item.times }}</span> -->
+            <span class="fr">更新时间：{{item.createTime}}</span>
           </p>
           <p class="btnArea">
-            <span><i class="el-icon-document"></i>查看解析</span>
-            <span v-show="type === 0"><i class="el-icon-edit"></i>编辑</span>
-            <span v-show="type === 0"><i class="el-icon-delete"></i>删除</span>
-            <span v-show="type === 1"><i class="el-icon-star-on"></i>取消收藏</span>
+            <!-- <span><i class="el-icon-document"></i>查看解析</span> -->
+            <!-- <span v-show="type === 0"><i class="el-icon-edit"></i>编辑</span> -->
+            <span v-show="type === 0" :data-id='item.id' @click="deleteItem"><i class="el-icon-delete"></i>删除</span>
+            <!-- <span v-show="type === 1"><i class="el-icon-star-on"></i>取消收藏</span> -->
           </p>
         </li>
-      </ul>
-      <!-- <div class="paging">
-         <el-pagination
-                 background
-                 @current-change="handleCurrentChange"
-                 @size-change="handleSizeChange"
-                 :current-page="currentPage"
-                 :page-sizes="[10, 20]"
-                 :page-size="100"
-                 layout="total, sizes, prev, pager, next, jumper"
-                 :total="20">
-         </el-pagination>
-       </div>-->
+			</ul>
+			<div class="paging" v-if="chooseArr.length > 0">
+				<el-pagination background @current-change="handleCurrentChange" @size-change="handleSizeChange" :current-page="page"
+				 :page-sizes="[10, 20]" :page-size="rows" layout="total, sizes, prev, pager, next, jumper" :total="total">
+				</el-pagination>
+			</div>
     </div>
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   export default {
     name: 'questionManage',
     data () {
@@ -93,62 +86,97 @@
         ],
         value: '',
         checkAll: true,
+				page: 1,
+        rows: 10,
         total: 0,
         chooseArr: [],
         currentPage: 1
       }
     },
     mounted () {
-      this.changeHeadline(0)
+			this.getList()
     },
     methods: {
+			getList(){
+				let that = this;
+				let params = {
+					page: that.page,
+					rows: that.rows
+				}
+				this.$http
+					.post("/Question/PageList",params)
+					.then(res => {
+						console.log(res);
+						if(res.data.code == 200) {
+							for(let i in res.data.data.list) {
+								let createTime = res.data.data.list[i].createTime;
+								res.data.data.list[i].createTime = createTime.replace('T', ' ')
+							}
+							this.chooseArr = res.data.data.list;
+							this.total = res.data.data.rows;
+						}
+					})
+					.catch(res => {
+						console.log(res);
+					});
+			},
       selectType (tab) {
         this.type = Number(tab.index);
         console.log(typeof (this.type));
       },
-      changeHeadline (type) {
-        let _data = {
-          total: 100,
-          data: [
-            {
-              checked: true,
-              title: '下面算术中，得数最大的是',
-              answer: ['1+2', '1+3', '2+3', '5+3'],
-              info: {
-                difficulty: '简单',
-                hour: '1',
-                type: '单选',
-                number: '000000111231',
-                contributor: '演示教师',
-                times: '1',
-                updateTime: '2019-03-08 17:03'
-              }
-            },
-            {
-              checked: false,
-              title: '下面算术中，得数最小的是',
-              answer: ['5-3', '1+3', '2+3', '5+3'],
-              info: {
-                difficulty: '一般',
-                hour: '1',
-                type: '单选',
-                number: '000000111231',
-                contributor: '演示教师',
-                times: '2',
-                updateTime: '2019-03-08 17:03'
-              }
-            }
-          ]
-        };
-        this.total = _data.total;
-        this.chooseArr = _data.data;
-      },
       handleSizeChange (val) {
         console.log(`每页 ${val} 条`);
+				this.rows = val
       },
       handleCurrentChange (val) {
         console.log(`当前页: ${val}`);
-      }
+				this.page = val;
+				this.getList();
+      },
+			// 删除当前题目
+			deleteItem(e){
+				let that = this;
+				let id = e.currentTarget.dataset.id;
+				console.log(id)
+				this.$confirm('此操作将永久删除该题, 是否继续?', '提示', {
+				  confirmButtonText: '确定',
+					callback: action => {
+						console.log(action)
+						if(action == 'confirm'){
+							let params = {
+								id: id
+							}
+							this.$http
+								.post("/Question/Delete",params)
+								.then(res => {
+									console.log(res);
+									this.$message({
+										type: 'info',
+										message: `${ res.data.message }`
+									});
+									if(res.data.code == 200) {
+										that.getList()
+									}
+								})
+								.catch(res => {
+									console.log(res);
+								});
+						}
+
+          },
+				  type: 'warning'
+				}).then(() => {
+				  this.$message({
+				    type: 'success',
+				    message: '删除成功!'
+				  });
+				}).catch(() => {
+				  this.$message({
+				    type: 'info',
+				    message: '已取消删除'
+				  });          
+				});
+			}
     },
     filters: {
       answerName (index) {
@@ -203,7 +231,7 @@
     }
   }
   .content-wrapper {
-    margin-top: 10px;
+    // margin-top: 10px;
     padding: 0 20px 30px;
     font-size: 14px;
     color: #999;
@@ -260,4 +288,7 @@
       }
     }
   }
+	.paging {
+		margin: 50px 0 0 0;
+	}
 </style>

@@ -274,8 +274,12 @@ export default {
       this.$http
         .post("/GroupPaper/SmartPaper", param)
         .then(res => {
-          // console.log(res.data.data);return false;
-          this.$router.push({name: 'editTest' ,params: {courseId:this.$route.params.courseId, paperId: res.data.data,fullMarks:this.fullMarks }})
+          console.log(res.data);
+          if(res.data.code == 200) {
+						this.$router.push({name: 'editTest' ,params: {courseId:this.$route.params.courseId, paperId: res.data.data,fullMarks:this.fullMarks }})
+					}else {
+						return false;
+					}
         })
         .catch(res => {
           console.log(res.data);

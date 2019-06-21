@@ -296,6 +296,14 @@ export default {
       this.$http.post('/GroupPaper/DownloadPaper',param)
       .then(res=>{
         console.log("下载",res)
+				if(res.data.code != 200){
+					this.$notify({
+					  title: '警告',
+					  message: '试卷总分不能为空',
+					  type: 'warning'
+					});
+					return false;
+				}
         // window.open(`${this.$http.baseUrlApi}/file/Download?fileName=${res.data.data}`)
 				window.open(res.data.data)
       })

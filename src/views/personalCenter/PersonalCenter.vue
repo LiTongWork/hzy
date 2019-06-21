@@ -22,21 +22,21 @@
             <!-- <el-menu-item index="1-4" class="list-item"><router-link tag="span" :to="{name: 'createdTest'}">创建的试卷</router-link></el-menu-item> -->
           </el-menu-item-group>
         </el-submenu>
-        <!-- <el-submenu index="2">
+      <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-menu"></i>
             <span class="title">个人中心</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="2-1" class="list-item"><router-link tag="span" :to="{name: 'teachingCourse'}">在教课程</router-link></el-menu-item>
+            <!-- <el-menu-item index="2-1" class="list-item"><router-link tag="span" :to="{name: 'teachingCourse'}">在教课程</router-link></el-menu-item> -->
             <el-menu-item index="2-2" class="list-item"><router-link tag="span" :to="{name: 'questionManage'}">试题管理</router-link></el-menu-item>
-            <el-menu-item index="2-3" class="list-item"><router-link tag="span" :to="{name: 'testManage'}">试卷管理</router-link></el-menu-item>
-            <el-menu-item index="2-4" class="list-item"><router-link tag="span" :to="{name: 'studentsGroup'}">学生分组</router-link></el-menu-item>
-            <el-menu-item index="2-5" class="list-item"><router-link tag="span" :to="{name: 'myExam'}">我的考试</router-link></el-menu-item>
-            <el-menu-item index="2-6" class="list-item"><router-link tag="span" :to="{name: 'myStudy'}">我的学习</router-link></el-menu-item>
+            <!-- <el-menu-item index="2-3" class="list-item"><router-link tag="span" :to="{name: 'testManage'}">试卷管理</router-link></el-menu-item> -->
+            <!-- <el-menu-item index="2-4" class="list-item"><router-link tag="span" :to="{name: 'studentsGroup'}">学生分组</router-link></el-menu-item> -->
+            <!-- <el-menu-item index="2-5" class="list-item"><router-link tag="span" :to="{name: 'myExam'}">我的考试</router-link></el-menu-item> -->
+            <!-- <el-menu-item index="2-6" class="list-item"><router-link tag="span" :to="{name: 'myStudy'}">我的学习</router-link></el-menu-item> -->
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="3">
+<!--      <el-submenu index="3">
           <template slot="title">
             <i class="el-icon-setting"></i>
             <span class="title">账户设置</span>
@@ -54,7 +54,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   export default {
     name: 'personalCenter',
     data () {
@@ -64,6 +64,10 @@
         userName: localStorage.getItem('userName')
       };
     },
+    mounted () {
+			// console.log(this.localIndex)
+    },
+
     methods: {
       handleOpen (key, keyPath) {
         console.log(11111, key, keyPath);
@@ -72,7 +76,7 @@
         console.log(key, keyPath);
       },
       changeIndex(val){
-        console.log(val)
+				this.index = val;
         localStorage.setItem('index', val)
       }
     }

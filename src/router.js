@@ -222,7 +222,8 @@ export default new Router({
 					path: '/PersonalCenter',
 					name: '',
 					component: PersonalCenter,
-					children: [{ //上传资源
+					children: [
+						{ //上传资源
 							path: '/',
 							name: 'uploadResource',
 							component: () => import( /* webpackChunkName: "uploadResource" */

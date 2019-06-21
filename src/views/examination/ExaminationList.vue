@@ -250,10 +250,11 @@ export default {
           "paperType":this.check2, //试卷类型(1:作业;2:月考;3:期中考试;4:期末考试;5:自定义)
           "schoolId":this.schoolId //学校id
       };
+			console.log(param)
       this.$http
         .post("/MyPaper/PageList", param)
         .then(res => {
-          // console.log(res.data.data);
+          console.log(res.data.data);
           this.total = res.data.data.records //total
           this.tableData = res.data.data.list
         })

@@ -186,7 +186,7 @@
                 <em>|</em>
                 <em>{{item.questionType==1?'单选题':(item.questionType==2?'多选题':(item.questionType==3?'判断题':(item.questionType==4?'填空题':(item.questionType==5?'简单题':'综合题'))))}}</em>
                 <em>|</em>
-                <em>贡献者：代老师{{item.name}}</em>
+                <em>贡献者：{{item.name}}</em>
                 <em>|</em>
                 <em>题目ID：{{item.id}}</em>
               </span>
@@ -255,7 +255,7 @@
         </div>
       </div>
     </div>
-  </div>
+	</div>
 </template>
 
 <script>
@@ -489,12 +489,13 @@ export default {
         schoolId: "4C243C1B-D046-4CDE-AFC0-369B9D43549B",
         knowIds: this.knowIds
       };
+			// console.log(param)
       localStorage.setItem("selectedParams", JSON.stringify(param));
       // console.log(11111,JSON.parse(localStorage.getItem('selectedParams')));
       this.$http
         .post("/GroupPaper/GroupPaperPage", param)
         .then(res => {
-          // console.log('加载题库列表',res.data.data)
+          console.log('加载题库列表',res.data.data)
           let data = res.data.data;
           this.lists = data.list;
           this.total = data.records; //total
@@ -586,17 +587,26 @@ export default {
     },
     //加入购物车
     addInTest(id, type) {
-      // console.log(id, type)
+      console.log(id, type)
       let param = {
         courseId: this.check1,
         questionId: id,
         questionType: type
       };
+			console.log(param)
       this.$http
         .post("/GroupPaper/AddShop", param)
         .then(res => {
-          // console.log(res.data)
-          this.statisticsShop(); //请求加载购物车
+          console.log(res)
+					if(res.data.code == 200) {
+							this.statisticsShop(); //请求加载购物车
+					}else{
+						this.$notify({
+							title: '提醒',
+							message: res.data.message,
+							type: 'warning'
+						});
+					}
         })
         .catch(res => {
           console.log(res.data);
@@ -636,7 +646,7 @@ export default {
       this.$http
         .post("/GroupPaper/RemoveShop", param)
         .then(res => {
-          console.log(res.data.data);
+          console.log(res);
         })
         .catch(res => {
           console.log(res.data);
@@ -690,7 +700,6 @@ export default {
   },
   mounted() {
     this.getData(); //加载课程
-
     setTimeout(function() {
       document.getElementById("float").style.width = "42px";
     }, 2000);

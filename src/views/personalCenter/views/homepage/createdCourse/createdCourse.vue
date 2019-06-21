@@ -78,7 +78,7 @@
 	</div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
 	export default {
 		name: 'createdCourse',
 		data() {
@@ -306,6 +306,7 @@
 
 		},
 		mounted() {
+			localStorage.setItem('index', '1-2')
 			this.getCourceList()
 		},
 		created() {
