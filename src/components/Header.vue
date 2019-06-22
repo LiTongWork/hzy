@@ -79,8 +79,9 @@ export default {
 		// 跳转我的主页
     toMyMain(){
       localStorage.setItem('index', '1-2')
-			this.$store.commit('updateIndex',localStorage.getItem('index'))
-			console.log(this.$store.state.index)
+			// this.$store.commit('updateIndex',localStorage.getItem('index'))
+			this.$store.commit('updateIndex', '1-2')
+			// console.log(this.$store.state.index)
       this.$router.push({name: 'createdCourse'})
     },
 		// 退出登录

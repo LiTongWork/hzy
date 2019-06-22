@@ -9,8 +9,9 @@ export default new Vuex.Store({
 	index: '1-2'
   },
   mutations: {
-	updateIndex (state) {
-		state.index = localStorage.getItem('index') 
+	updateIndex (state, val) {
+		console.log('niyoudu' + val)
+		state.index = val
 	}
   },
   actions: {

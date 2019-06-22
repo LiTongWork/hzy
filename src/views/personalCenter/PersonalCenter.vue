@@ -83,14 +83,14 @@
 			},
 			changeIndex(val) {
 				this.index = val;
-				localStorage.setItem('index', val)
-				this.$store.commit('updateIndex',localStorage.getItem('index'))
+				// localStorage.setItem('index', val)
+				this.$store.commit('updateIndex',val)
 				console.log(this.indexContent)
 			}
 		},
 		computed: {
 			indexContent() {
-				console.log(this.$store.state.index)
+				// console.log(this.$store.state.index)
 				return this.$store.state.index
 			}
 		},
