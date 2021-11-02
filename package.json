@@ -21,7 +21,7 @@
     "postcss-px-to-viewport": "^1.1.0",
     "quill-image-drop-module": "^1.0.3",
     "sass-resources-loader": "^2.0.0",
-    "tinymce": "^5.0.3",
+    "tinymce": "^5.10.0",
     "vue": "^2.6.6",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.1",
